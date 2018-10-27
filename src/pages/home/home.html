@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -7,12 +7,62 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content>
+<ion-card *ngIf="puzzle">
+  <ion-card-content>
+    <input [ngModel]="puzzle_id" (ngModelChange)="valuechange($event)" type="search" placeholder="Enter a puzzle number!" aria-label=""/>
+    <ion-card-title font-size:4px>
+      puzzle:{{ puzzle.id}}
+    </ion-card-title>
+    <ion-grid>
+      <ion-row class="row header">
+          <ion-col col-4 class="col">Joey Clue</ion-col>
+          <ion-col col-8 class="col">Kangaroo Word</ion-col>
+      </ion-row>
+        <div #word_rows >
+          <ion-row class="row" *ngFor='let puzzle_row of puzzle.puzzle_rows'>
+              <ion-col col-4 class="col">
+                {{puzzle_row.joey_clue}}
+              </ion-col> 
+              <ion-col col-8 class="col">
+                <span *ngFor='let unfilled_char of puzzle_row.kangaroo_unfilled' class="kangaroo"> <span [style.color]="getStyle(unfilled_char)"> {{unfilled_char}} </span>
+                </span>
+              </ion-col>
+          </ion-row > 
+        </div>
+      </ion-grid>   
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <!-- The Guess Bar and Reset Button -->
+  <ion-grid #guess_area>
+    <ion-row>
+      <ion-col col-9>
+        <input #guessbar [value]="guess_value" type="search" placeholder="Take a guess..." aria-label=" " disabled="disabled" />
+      </ion-col>
+      <ion-col col-3>
+        <button class="btn btn-lgg" (click)="onReset()">reset</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <!-- our list and list items -->
+  <ion-grid>
+    <ion-row style="padding: 0px 4px 10px 4px;">
+      <ion-col *ngFor="let letter of puzzle.letterbank_update" col-3 class="letter-square" (click)="onSelect(letter); fillNextBlank(letter); checkSolution();">
+         <button ion-button full style="height:100%;">{{letter}}</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-card-content>
+</ion-card> 
+
+<div [hidden]="puzzle || puzzleErrMess">
+  <ion-spinner></ion-spinner>
+  <h4>Loading . . . Please Wait</h4>
+</div>
+<div *ngIf="puzzleErrMess">
+  <h2>Error</h2>
+  <h4>{{puzzleErrMess}}</h4>
+</div>
+
 </ion-content>

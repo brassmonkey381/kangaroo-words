@@ -14,17 +14,6 @@ $app-direction: ltr;
 
 @import "ionic.globals";
 
-
-// Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/theming/overriding-ionic-variables/
-
-
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -34,13 +23,114 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
+  primary:    #ff5500,
+  secondary:  #ffcc99,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  twitter: (
+    base: #55acee,
+    contrast: #ffffff
+  )
 );
 
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+ion-row.row.header {
+  background-color:color($colors, primary);
+}
+
+ion-row {
+  border: solid 1px grey;
+  border-bottom-style: none;
+  border-right-style: solid 1px grey;
+  background-color:color($colors, secondary)
+}
+
+ion-row:last-child {
+  border-bottom: solid 1px grey;
+}
+
+.example-animate-container {
+  background:white;
+  border:1px solid black;
+  list-style:none;
+  margin:0;
+  padding:0 10px;
+}
+
+.animate-repeat {
+  line-height:30px;
+  list-style:none;
+  box-sizing:border-box;
+}
+
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave {
+  transition:all linear 0.5s;
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-move,
+.animate-repeat.ng-enter {
+  opacity:0;
+  max-height:0;
+}
+
+.animate-repeat.ng-leave,
+.animate-repeat.ng-move.ng-move-active,
+.animate-repeat.ng-enter.ng-enter-active {
+  opacity:1;
+  max-height:30px;
+}
+
+ion-col.letter-square.col{
+  border:1px;
+  background-color: none;
+  text-align: center;
+  width:72px;
+  height:72px;
+}
+
+ion-col.my-thin-col{
+  flex: 0 0 4px;
+  padding:0;
+  margin-right:10px;
+}
+
+.btn.btn-md.btn-primary{
+   border:3px solid color($colors, primary);
+   color: color($colors, twitter, base);
+   width:72px;
+   height:72px;
+}
+
+input{
+  background-color: color($colors, twitter, contrast);
+  width: 100%;
+}
+
+.kangaroo {
+  margin:1px;
+}
+
+.btn.btn-lgg{
+  color: color($colors, dark);
+  background-color: color($colors, danger);
+  height:100%;
+  width:100%;
+}
+
+#letter_area{
+  width:100%;
+  height:100%;
+}
 
 // App iOS Variables
 // --------------------------------------------------

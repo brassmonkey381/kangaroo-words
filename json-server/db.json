@@ -1,0 +1,89 @@
+{
+  "puzzles": [
+    {
+      "id":0,
+      "puzzle_rows":[
+    {
+      "joey_word": "art",
+      "joey_clue": "Banksy",
+      "kangaroo_word": "adroitness",
+      "joey_indices": [
+        0,
+        2,
+        5
+      ],
+      "kangaroo_unfilled": ["_","d","_","o","i","_","n","e","s","s"]
+    },
+    {
+      "joey_word": "act",
+      "joey_clue": "Cruise",
+      "kangaroo_word": "action",
+      "joey_indices": [
+        0,
+        1,
+        2
+      ],
+      "kangaroo_unfilled": ["_","_","_","i","o","n"]
+    },
+    {
+      "joey_word": "allot",
+      "joey_clue": "divvy",
+      "kangaroo_word": "allocate",
+      "joey_indices": [
+        0,
+        1,
+        2,
+        3,
+        6
+      ],
+      "kangaroo_unfilled": ["_","_","_","_","c","a","_","e"]
+    }
+    ],
+      "letterbank":["A", "A", "A", "C", "L", "L", "O", "R", "T", "T", "T"],
+      "letterbank_update":["A", "A", "A", "C", "L", "L", "O", "R", "T", "T", "T"]
+    },
+    {
+      "id":1,
+      "puzzle_rows":[
+    {
+      "joey_word": "art",
+      "joey_clue": "Banksy",
+      "kangaroo_word": "adroitness",
+      "joey_indices": [
+        0,
+        2,
+        5
+      ],
+      "kangaroo_unfilled": ["_","d","_","o","i","_","n","e","s","s"]
+    },
+    {
+      "joey_word": "act",
+      "joey_clue": "Cruise",
+      "kangaroo_word": "action",
+      "joey_indices": [
+        0,
+        1,
+        2
+      ],
+      "kangaroo_unfilled": ["_","_","_","i","o","n"]
+    },
+    {
+      "joey_word": "allot",
+      "joey_clue": "divvy",
+      "kangaroo_word": "allocate",
+      "joey_indices": [
+        0,
+        1,
+        2,
+        3,
+        6
+      ],
+      "kangaroo_unfilled": ["_","_","_","_","c","a","_","e"]
+    }
+    ],
+      "letterbank":["A", "A", "A", "C", "L", "L", "O", "R", "T", "T", "T"],
+      "letterbank_update":["A", "A", "A", "C", "L", "L", "O", "R", "T", "T", "T"]
+    }
+  ],
+  "feedback": []
+}
