@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Puzzle, PuzzleRow} from '../../shared/puzzle';
 import { PuzzleDbService } from '../../providers/puzzle-db/puzzle-db';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 @Component({
   selector: 'page-home',
@@ -15,9 +16,11 @@ export class HomePage implements OnInit {
   guess_indicies: number[][] = [[],[],[],[]];
   my_puzzle_db: Puzzle[];
   puzzle_id: number = 0;
+  joeys_found: number = 0;
 
   constructor(public navCtrl: NavController,
     //private puzzleservice: PuzzleProvider,
+    private nativeAudio: NativeAudio,
     private puzzledbservice: PuzzleDbService) {}//,
     //@Inject('BaseURL') private BaseURL) { }
 
@@ -27,6 +30,11 @@ export class HomePage implements OnInit {
 
     this.my_puzzle_db = this.puzzledbservice.getPuzzles()
     this.puzzle = this.puzzledbservice.getPuzzleLevel(this.puzzle_id)
+    this.nativeAudio.preloadSimple('click', 'json-server/public/sounds/click.mp3');
+    this.nativeAudio.preloadSimple('reset', 'json-server/public/sounds/reset.mp3');
+    this.nativeAudio.preloadSimple('joey_found', 'json-server/public/sounds/joey_found.mp3');
+    this.nativeAudio.preloadSimple('puzzle_solved', 'json-server/public/sounds/puzzle_solved.mp3');
+
 
     //this.puzzle = this.puzzledbservice.getPuzzleLevel(0)
     //  .subscribe(puzzle => this.puzzle = puzzle)
@@ -43,7 +51,10 @@ export class HomePage implements OnInit {
     }
   }
 
-  onReset(){
+  onReset(play_sound){
+     if (play_sound === undefined) {
+        play_sound = true;
+    }
     this.puzzle.puzzle_rows.forEach((row, i) =>{
       if (this.guess_value.toLowerCase() == row.joey_word){
 
@@ -61,12 +72,16 @@ export class HomePage implements OnInit {
    this.guess_value='';
    this.puzzle.letterbank_update = Object.assign([], this.puzzle.letterbank);
    this.guess_indicies = Object.assign([], [[],[],[],[]]);
+   if(play_sound){
+      this.nativeAudio.play('reset', console.log('reset'))
+   }
   }
 
   onSelect(letter: string){
     this.guess_value = this.guess_value + letter
     const index: number = this.puzzle.letterbank_update.indexOf(letter);
     this.puzzle.letterbank_update.splice(index, 1); 
+    this.nativeAudio.play('click', console.log('click'))
   }
 
   fillNextBlank(letter): number {
@@ -82,22 +97,8 @@ export class HomePage implements OnInit {
     console.log(this.guess_indicies);
   }
 
-  checkSolution(){
-    //See if any of the "filled words" match a joey word
-    this.puzzle.puzzle_rows.forEach((row, i) =>{
-      if (this.guess_value.toLowerCase() == row.joey_word){
-        const w: string;
-        w = this.guess_value.toUpperCase().split('');
-        console.log("JOEY FOUND: ", w)
-        const index: number;
-        for (let l in w){
-          index = this.puzzle.letterbank.indexOf(w[l]);
-          console.log(index)
-          this.puzzle.letterbank.splice(index, 1); 
-        }
-        this.onReset()
-      }
-    })
+  onPuzzleSolved(){
+    this.nativeAudio.play('puzzle_solved', console.log('puzzle_solved'))
   }
 
   getStyle(unfilled_char: string, flag: bool): string{
@@ -110,6 +111,42 @@ export class HomePage implements OnInit {
       return("primary")
     }
   }
+
+  /*checkAllJoeysFound(){
+    return(this.joeys_found == len(this.puzzle.puzzle_rows))
+  }*/
+
+  checkSolution(){
+    //See if any of the "filled words" match a joey word
+    this.puzzle.puzzle_rows.forEach((row, i) =>{
+      if (this.guess_value.toLowerCase() == row.joey_word){
+        const w: string;
+        w = this.guess_value.toUpperCase().split('');
+        console.log("JOEY FOUND: ", w)
+        this.joeys_found  = this.joeys_found + 1        
+        const index: number;
+        for (let l in w){
+          index = this.puzzle.letterbank.indexOf(w[l]);
+          console.log(index)
+          this.puzzle.letterbank.splice(index, 1); 
+        }
+
+        if(this.joeys_found == this.puzzle.puzzle_rows.length){
+          this.nativeAudio.play('puzzle_solved', console.log('puzzle_solved'))
+        }
+        else{
+          this.nativeAudio.play('joey_found', console.log('joey_found'))
+          this.onReset(false)
+        }
+        
+      }
+    })
+
+
+  }
+
+  
+
 }
 
 

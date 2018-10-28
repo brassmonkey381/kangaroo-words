@@ -7,25 +7,19 @@ def find_joey_indices(joey, kangaroo):
     """
     ixs = []
     kanga = kangaroo
-    last_ix = 0
+    removed_length = 0
     for k, char in enumerate(joey):
         ix = kanga.index(char)
-        if last_ix == 0:
-            ixs.append(ix)
-            last_ix = last_ix+ix+1
-        else:
-            ixs.append(ix+last_ix)
-            last_ix = ix+last_ix
-        if k == len(joey):
-            break
-        else:
-            kanga = kangaroo[last_ix:]
-        
-        #replace joey indicies with '_' in the kangaroo word
-        kangaroo = list(kangaroo)
-        for ix in ixs:
-            kangaroo[ix] = '_'
-        kangaroo = "".join(kangaroo)
+        ixs.append(ix+removed_length)
+        remove_str = kanga[:ix+1]
+        removed_length += len(remove_str)
+        kanga = kanga[ix+1:]
+
+    #replace joey indicies with '_' in the kangaroo word
+    kangaroo = list(kangaroo)
+    for ix in ixs:
+        kangaroo[ix] = '_'
+    kangaroo = "".join(kangaroo)
     return([ixs, kangaroo])
 
 def append_columns(df):
@@ -64,3 +58,9 @@ def create_puzzle(puzzle_id, joey_words, kangaroo_words, joey_clues):
     temp = pd.DataFrame({"id":[puzzle_id], "letterbank":[letter_bank], "letterbank_update":[letter_bank]})
     temp["puzzle_rows"] = [df.to_dict(orient="records")]
     return(temp)
+
+def print_row(_id, df):
+    print(
+        [x['joey_word'] for x in df[df.id == _id].puzzle_rows[0]],
+        [x['kangaroo_word'] for x in df[df.id == _id].puzzle_rows[0]]
+    )
