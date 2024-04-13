@@ -20,3 +20,7 @@
   </li>
 </ul>
 <p>Embark on your lexical adventure with Kangaroo Words and bounce your way through a forest of fascinating puzzles!</p>
+
+<figure class="video_container">
+  <iframe src="kangaroo_words_demo_level.webm" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
