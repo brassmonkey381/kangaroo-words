@@ -21,6 +21,4 @@
 </ul>
 <p>Embark on your lexical adventure with Kangaroo Words and bounce your way through a forest of fascinating puzzles!</p>
 
-<figure class="video_container">
-  <iframe src="kangaroo_words_demo_level.webm" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+[kangaroo_words_demo_level.webm](https://github.com/brassmonkey381/kangaroo-words/assets/16628252/39cf453b-4c52-4589-ad38-4da6d6976320)
