@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Puzzle, PuzzleRows } from '../../shared/puzzle';
+import { Puzzle } from '../../shared/puzzle';
 import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 import { baseURL } from '../../shared/baseurl';

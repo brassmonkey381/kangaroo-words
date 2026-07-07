@@ -15,8 +15,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ProcessHttpmsgProvider } from '../providers/process-httpmsg/process-httpmsg';
 //import { baseURL } from '../shared/baseurl';
 import { PuzzleDbService } from '../providers/puzzle-db/puzzle-db';
-import { SoundsProvider } from '../providers/sounds/sounds';
 import { NativeAudio } from '@ionic-native/native-audio';
+import { SoundProvider } from '../providers/sound/sound';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 @NgModule({
   declarations: [
@@ -42,12 +43,14 @@ import { NativeAudio } from '@ionic-native/native-audio';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ProcessHttpmsgProvider,
     //PuzzleProvider,
     //{ provide: 'BaseURL', useValue: baseURL},
     PuzzleDbService,
-    NativeAudio
+    NativeAudio,
+    SoundProvider,
+    Keyboard
   ]
 })
-export class AppModule {}
+export class AppModule { }

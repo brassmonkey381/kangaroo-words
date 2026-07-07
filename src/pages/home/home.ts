@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Puzzle, PuzzleRow} from '../../shared/puzzle';
+import { Puzzle} from '../../shared/puzzle';
 import { PuzzleDbService } from '../../providers/puzzle-db/puzzle-db';
 import { NativeAudio } from '@ionic-native/native-audio';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 @Component({
   selector: 'page-home',
@@ -21,6 +22,7 @@ export class HomePage implements OnInit {
   constructor(public navCtrl: NavController,
     //private puzzleservice: PuzzleProvider,
     private nativeAudio: NativeAudio,
+    public keyboard: Keyboard,
     private puzzledbservice: PuzzleDbService) {}//,
     //@Inject('BaseURL') private BaseURL) { }
 
@@ -60,8 +62,7 @@ export class HomePage implements OnInit {
 
       } else{
         console.log(this.guess_indicies[i])
-        const guess_ix: number;
-        const guess_val: number;
+        let guess_val = 0;
           for(let guess_ix in this.guess_indicies[i]){
             guess_val = this.guess_indicies[i][guess_ix];
              console.log(guess_val);
@@ -73,7 +74,8 @@ export class HomePage implements OnInit {
    this.puzzle.letterbank_update = Object.assign([], this.puzzle.letterbank);
    this.guess_indicies = Object.assign([], [[],[],[],[]]);
    if(play_sound){
-      this.nativeAudio.play('reset', console.log('reset'))
+     this.nativeAudio.play('reset');
+     console.log('reset');
    }
   }
 
@@ -81,10 +83,11 @@ export class HomePage implements OnInit {
     this.guess_value = this.guess_value + letter
     const index: number = this.puzzle.letterbank_update.indexOf(letter);
     this.puzzle.letterbank_update.splice(index, 1); 
-    this.nativeAudio.play('click', console.log('click'))
+    this.nativeAudio.play('click');
+    console.log('click');
   }
 
-  fillNextBlank(letter): number {
+  fillNextBlank(letter): void {
     //Get the index of the next blank in this character array
     this.puzzle.puzzle_rows.forEach((row, i) =>{
       // TODO: if this row is solved, skip?
@@ -98,15 +101,13 @@ export class HomePage implements OnInit {
   }
 
   onPuzzleSolved(){
-    this.nativeAudio.play('puzzle_solved', console.log('puzzle_solved'))
+    this.nativeAudio.play('puzzle_solved');
+    console.log('puzzle_solved');
   }
 
-  getStyle(unfilled_char: string, flag: bool): string{
-    if(flag){
-      return("green")
-    }
-    else if((unfilled_char != "_") && (unfilled_char == unfilled_char.toUpperCase())){
-      return("green")
+  getStyle(unfilled_char: string, flag: boolean): string{
+    if ((unfilled_char != "_") && (unfilled_char == unfilled_char.toUpperCase())) {
+      return("green")  
     } else{
       return("primary")
     }
@@ -120,11 +121,11 @@ export class HomePage implements OnInit {
     //See if any of the "filled words" match a joey word
     this.puzzle.puzzle_rows.forEach((row, i) =>{
       if (this.guess_value.toLowerCase() == row.joey_word){
-        const w: string;
+        let w = [""];
         w = this.guess_value.toUpperCase().split('');
         console.log("JOEY FOUND: ", w)
-        this.joeys_found  = this.joeys_found + 1        
-        const index: number;
+        this.joeys_found = this.joeys_found + 1        
+        let index = 0;
         for (let l in w){
           index = this.puzzle.letterbank.indexOf(w[l]);
           console.log(index)
@@ -132,10 +133,12 @@ export class HomePage implements OnInit {
         }
 
         if(this.joeys_found == this.puzzle.puzzle_rows.length){
-          this.nativeAudio.play('puzzle_solved', console.log('puzzle_solved'))
+          this.nativeAudio.play('puzzle_solved');
+          console.log('puzzle_solved');
         }
         else{
-          this.nativeAudio.play('joey_found', console.log('joey_found'))
+          this.nativeAudio.play('joey_found');
+          console.log('joey_found');
           this.onReset(false)
         }
         

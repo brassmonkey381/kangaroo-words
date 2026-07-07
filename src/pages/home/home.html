@@ -35,11 +35,15 @@
   <!-- The Guess Bar and Reset Button -->
   <ion-grid #guess_area>
     <ion-row>
-      <ion-col col-9>
+      <ion-col col-8>
         <input #guessbar [value]="guess_value" type="search" placeholder="Take a guess..." aria-label=" " disabled="disabled" />
       </ion-col>
-      <ion-col col-3>
+      <ion-col col-2>
         <button class="btn btn-lgg" (click)="onReset()">reset</button>
+        
+      </ion-col>
+      <ion-col col-2>
+        <button class="btn btn-lgg" (click)="keyboard.show()">Show KEY</button>
       </ion-col>
     </ion-row>
   </ion-grid>
